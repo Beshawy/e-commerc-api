@@ -31,29 +31,25 @@ exports.getCategories =  asyncHandler(async (req,res) =>{
 
 // Create category
 
-   exports.createCategory = asyncHandler( async (req,res) => {
-      const {name} = req.body ;
-      try{
-      const category = await category.create({name, slugify })
-         res.status(201).json({data : category}) ;
-      } catch(err) {
-         res.status(400).send(err) ;
-       }
-   }) ;
+   exports.createCategory = asyncHandler(async (req, res, next) => {
+  const { name } = req.body;
+  if(!name) return next(new ApiError('Category name is required', 400));
+  const newCategory = await category.create({ name, slug: slugify(name) });
+  res.status(201).json({ data: newCategory });
+}) ;
 
  // Update category
    exports.updateCategory = asyncHandler (async (req,res,next) =>{
       const {id} = req.params ;
       const {name} = req.body ;
-      const updateCategory = await category.findByIdAndUpdate({_id:id} , 
-      {name, slug : slugify(name)} , {new : true , runValidators : true}) ;
+      const updated = await category.findByIdAndUpdate(id, { name, slug: slugify(name) }, { new: true });
          if (!mongoose.Types.ObjectId.isValid(id)) {
       return next(new ApiError('Invalid category id', 400));
    }
-      if(!updateCategory){
+      if(!updated){
          return  next(new ApiError('Category not found' , 404)) ;
       }
-      res.status(200).json({data : updateCategory}) ;
+      res.status(200).json({data : updated}) ;
    })
 
 

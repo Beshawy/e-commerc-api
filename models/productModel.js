@@ -1,5 +1,42 @@
 const mongoose = require('mongoose') ;
 
+// models/Product.js
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Product:
+ *       type: object
+ *       required:
+ *         - title
+ *         - price
+ *         - category
+ *       properties:
+ *         title:
+ *           type: string
+ *           description: Product title
+ *         description:
+ *           type: string
+ *           description: Product description
+ *         price:
+ *           type: number
+ *           description: Product price
+ *         category:
+ *           type: string
+ *           description: Product category
+ *         images:
+ *           type: array
+ *           items:
+ *             type: string
+ *           description: Product images URLs
+ *       example:
+ *         title: "iPhone 13"
+ *         description: "Latest iPhone model"
+ *         price: 999.99
+ *         category: "Electronics"
+ *         images: ["image1.jpg", "image2.jpg"]
+ */
+
 const productSchema = new mongoose.Schema({
 title : {
     type : String ,

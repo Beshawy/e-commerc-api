@@ -14,10 +14,9 @@ exports.getProducts =  asyncHandler(async (req,res) =>{
    .search()
    .paginate()
    .limitFields()
-   .sort() 
-   .populate({path : 'category' , select : 'name -_id' }) ;
+   .sort() ;
    const { mongooseQuery , paginationResult } = apiFeatures ;
-   const products = await mongooseQuery ; 
+   const products = await mongooseQuery.populate({path : 'category' , select : 'name -_id' }) ; 
 
    res.status(200).json({results: products.length,paginationResult , data : products}) ;
 })
