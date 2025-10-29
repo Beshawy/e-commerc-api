@@ -11,12 +11,12 @@ const { createTokenPair, verifyAccessToken, verifyRefreshToken } = require('../u
 
 exports.signup = asyncHandler(async (req,res , next)=>{
     const { name, email, password } = req.body;
-    // تحقق من وجود الحقول الأساسية أولاً (أو يعتمد على validators)
+
     const user = await User.create({
         name,
         email,
         password,
-        slug: slugify(name) // <-- هنا نولد الـ slug
+        slug: slugify(name) 
     });
     // generate token 
     const token = createToken(user._id) ;
@@ -196,43 +196,6 @@ exports.allowTo = (...roles) => {
     next();
   };
 };
-
-
-//  //forgot password 
-//  exports.forgotPassword = asyncHandler(async (req , res , next) =>{
-//     const user = await User.findOne({ email : req.body.email });
-//     if(!user){
-//         return next(new ApiError('There is no user with this email' , 404));
-//     }
-
-//     // generate 6-digit code and hash it with a supported algorithm
-//     const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
-//     const hashedResetCode = crypto.createHash('sha256').update(resetCode).digest('hex');
-
-//     // save reset code to db
-//     user.passwordResetCode = hashedResetCode;
-//     user.passwordResetExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
-//     user.passwordResetVerified = false;
-//     await user.save();
-
-//     const message = `Hi ${user.name} , \n  Your password reset code is : ${resetCode}` ;
-
-//     // TODO: send `resetCode` via email to user (send plain resetCode, keep hashed in DB)
-//       try{
-//            await sendEmail({email : user.email ,
-//      subject : 'Your password reset code (valid for 10 min)' ,
-//       message}) ;
-//       } catch(err){
-//         user.passwordResetCode = undefined ;
-//         user.passwordResetExpires = undefined ;
-//         user.passwordResetVerified = undefined ;
-//         await user.save() ;
-//         return next(new ApiError('There was an error sending the email. Try again later' , 500)) ;
-//       }
-//     res.status(200).json({status : 'success' , message : 'Reset code sent to email '}) ;
-
-
-// });
 
 
 exports.forgotPassword = asyncHandler(async (req, res, next) => {

@@ -58,7 +58,7 @@ console.log('userService handlers types:', {
   changeUserPassword: typeof changeUserPassword,
   updateLoggedUserPassword: typeof updateLoggedUserPassword,
   uploadUserImage: typeof uploadUserImage,
-  resizeImage: typeof resizeImage,
+  resizeImage: typeof resizeImage, 
   getLoggedUserData: typeof getLoggedUserData
 });
 
