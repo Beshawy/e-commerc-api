@@ -110,9 +110,11 @@ app.use(globalError);
 const PORT = process.env.PORT  || 8000; 
 
 // عند استخدام server variable عند إغلاق التطبيق تأكد أنه معرف:
-const server = app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// const server = app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
+
+module.exports = app ;
 
 // handle unhandled rejections
 process.on('unhandledRejection', (err) => {
