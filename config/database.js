@@ -3,14 +3,14 @@ const mongoose = require('mongoose');
 const dbConnection = async () => {
   try {
     // استخدام رابط احتياطي في حالة عدم وجود متغير البيئة
-    const dbUrl = process.env.DB_URL || process.env.DATABASE_URL || process.env.MONGODB_URI;
+    const DB_URL= process.env.DB_URL || process.env.DATABASE_URL || process.env.MONGODB_URI;
     
-    if (!dbUrl) {
+    if (!DB_URL) {
       throw new Error('متغير البيئة DB_URL غير موجود. يرجى التأكد من إضافته في ملف config.env أو في متغيرات البيئة في Railway');
     }
     
-    console.log('Connecting to DB with:', dbUrl); // للتشخيص
-    await mongoose.connect(dbUrl, {
+    console.log('Connecting to DB with:', DB_URL); // للتشخيص
+    await mongoose.connect(DB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
